@@ -6,8 +6,8 @@
   "scripts": {
     "test": "node test/",
     "lint": "eslint .",
-    "build": "echo $TRAVIS_BRANCH",
-    "deploy": "now deploy"
+    "build": "echo lab1-project",
+    "deploy": "now deploy --token $NOW_TOKEN --name \"lab1-project-$TRAVIS_BRANCH\""
   },
   "repository": {
     "type": "git",

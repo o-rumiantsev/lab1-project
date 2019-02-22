@@ -11,3 +11,4 @@ script:
   - npm test
   - npm run build
   - npm run deploy
+  - echo $TRAVIS_BRANCH
