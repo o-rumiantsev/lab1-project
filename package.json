@@ -6,7 +6,8 @@
   "scripts": {
     "test": "node test/",
     "lint": "eslint .",
-    "build": "echo $TRAVIS_BRANCH"
+    "build": "echo $TRAVIS_BRANCH",
+    "deploy": "now deploy"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   },
   "homepage": "https://github.com/o-rumiantsev/lab1-project#readme",
   "devDependencies": {
-    "eslint": "^5.14.1"
+    "eslint": "^5.14.1",
+    "now": "^14.0.0"
   }
 }
