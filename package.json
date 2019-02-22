@@ -1,0 +1,21 @@
+{
+  "name": "lab1-project",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run lint && node test/",
+    "lint": "eslint .",
+    "build": "echo \"Building lab1-project\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/o-rumiantsev/lab1-project.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/o-rumiantsev/lab1-project/issues"
+  },
+  "homepage": "https://github.com/o-rumiantsev/lab1-project#readme"
+}
