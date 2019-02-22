@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npm run lint && node test/",
+    "test": "node test/",
     "lint": "eslint .",
-    "build": "echo \"Building lab1-project\""
+    "build": "echo $TRAVIS_BRANCH"
   },
   "repository": {
     "type": "git",
@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/o-rumiantsev/lab1-project/issues"
   },
-  "homepage": "https://github.com/o-rumiantsev/lab1-project#readme"
+  "homepage": "https://github.com/o-rumiantsev/lab1-project#readme",
+  "devDependencies": {
+    "eslint": "^5.14.1"
+  }
 }
