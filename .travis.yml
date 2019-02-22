@@ -3,12 +3,10 @@ language: node_js
 node_js:
   - 11
 
-before_script:
-  - npm install
+install: npm install
 
-script:
-  - npm run lint
-  - npm test
-  - npm run build
-  - npm run deploy
-  - echo $TRAVIS_BRANCH
+before_script: npm run lint && npm test
+
+script: npm run build
+
+after_script: npm run deploy && echo "Successfully deployed branch $TRAVIS_BRANCH"
