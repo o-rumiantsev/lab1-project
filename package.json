@@ -7,7 +7,9 @@
     "test": "node test/",
     "lint": "eslint .",
     "build": "echo lab1-project",
-    "deploy": "now alias --token $NOW_TOKEN $(now --token $NOW_TOKEN --name \"lab1-project-$TRAVIS_BRANCH\") \"lab1-project-$TRAVIS_BRANCH\""
+    "deploy": "npm run deploy:plain && npm run deploy:alias",
+    "deploy:plain": "now --token $NOW_TOKEN -e HOST=lab1-project-$TRAVIS_BRANCH.now.sh",
+    "deploy:alias": "now alias --token $NOW_TOKEN \"lab1-project-$TRAVIS_BRANCH\""
   },
   "repository": {
     "type": "git",
@@ -21,6 +23,11 @@
   "homepage": "https://github.com/o-rumiantsev/lab1-project#readme",
   "devDependencies": {
     "eslint": "^5.14.1",
-    "now": "^14.0.0"
+    "eslint-config-metarhia": "^7.0.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-prettier": "^3.0.1",
+    "now": "^14.0.0",
+    "prettier": "^1.16.4"
   }
 }

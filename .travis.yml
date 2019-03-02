@@ -3,6 +3,8 @@ language: node_js
 node_js:
   - 11
 
+cache: npm
+
 install: npm install
 
 before_script: npm run lint && npm test

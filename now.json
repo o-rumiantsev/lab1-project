@@ -1,4 +1,14 @@
 {
   "version": 2,
-  "name": "lab1-project"
+  "name": "lab1-project",
+  "builds": [
+    {
+      "src": "./proxy.js", "use": "@now/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/", "dest": "/proxy.js"
+    }
+  ]
 }
