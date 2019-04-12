@@ -22,5 +22,9 @@
   "devDependencies": {
     "eslint": "^5.14.1",
     "now": "^14.0.0"
+  },
+  "dependencies": {
+    "jsdom": "^14.0.0",
+    "node-fetch": "^2.3.0"
   }
 }
