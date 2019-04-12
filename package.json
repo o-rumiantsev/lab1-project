@@ -1,13 +1,22 @@
 {
-  "name": "lab1-project",
+  "name": "o-rumiantsev.schedule",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "node test/",
-    "lint": "eslint .",
+    "lint": "yarn run lint:js && yarn run lint:json && yarn run lint:yml",
+    "lint:js": "eslint --ignore-path .gitignore .",
+    "lint:json": "prettier -c \"**/*.json\" \".*rc\"",
+    "lint:yml": "prettier -c \"**/*.yml\"",
+    "fmt": "yarn run fmt:js && yarn run fmt:json && yarn run fmt:yml",
+    "fmt:js": "prettier --write \"**/*.js\"",
+    "fmt:json": "prettier --write \"**/*.json\" \".*rc\"",
+    "fmt:yml": "prettier --write \"**/*.yml\"",
     "build": "echo lab1-project",
-    "deploy": "now alias --token $NOW_TOKEN $(now --token $NOW_TOKEN --name \"lab1-project-$TRAVIS_BRANCH\") \"lab1-project-$TRAVIS_BRANCH\""
+    "deploy": "yarn run deploy:zeit && yarn run deploy:alias",
+    "deploy:zeit": "now --token $NOW_TOKEN -e NOW_URL=lab1-project-$TRAVIS_BRANCH.now.sh",
+    "deploy:alias": "now alias --token $NOW_TOKEN \"lab1-project-$TRAVIS_BRANCH\""
   },
   "repository": {
     "type": "git",
@@ -21,6 +30,16 @@
   "homepage": "https://github.com/o-rumiantsev/lab1-project#readme",
   "devDependencies": {
     "eslint": "^5.14.1",
-    "now": "^14.0.0"
+    "eslint-config-metarhia": "^7.0.0",
+    "eslint-config-prettier": "^4.1.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-prettier": "^3.0.1",
+    "now": "^14.0.0",
+    "prettier": "^1.17.0"
+  },
+  "dependencies": {
+    "jsdom": "^14.0.0",
+    "node-fetch": "^2.3.0",
+    "node-telegram-bot-api": "^0.30.0"
   }
 }

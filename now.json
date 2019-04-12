@@ -1,4 +1,10 @@
 {
   "version": 2,
-  "name": "lab1-project"
+  "name": "o-rumiantsev.schedule",
+  "builds": [
+    {
+      "src": "./index.js",
+      "use": "@now/node"
+    }
+  ]
 }
