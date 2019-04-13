@@ -7,7 +7,12 @@ class DOMCursor {
     this.dom = dom;
   }
 
-  extract(query) {
+  static fromHTML(html) {
+    const dom = new JSDOM(html);
+    return new DOMCursor(dom);
+  }
+
+  select(query) {
     return new Cursor(this.dom.window.document.querySelectorAll(query));
   }
 
@@ -30,11 +35,8 @@ class Cursor {
 
   first() {
     if (this.items.length === 0) return new Cursor();
-
     const { innerHTML } = this.items[0];
-    const dom = new JSDOM(innerHTML);
-
-    return new DOMCursor(dom);
+    return DOMCursor.fromHTML(innerHTML);
   }
 
   project(property) {
@@ -46,4 +48,7 @@ class Cursor {
   }
 }
 
-module.exports = DOMCursor;
+module.exports = {
+  Cursor,
+  DOMCursor,
+};

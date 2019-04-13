@@ -1,7 +1,9 @@
 'use strict';
 
+const qs = require('querystring');
+const fetch = require('node-fetch');
 const { JSDOM } = require('jsdom');
-const DOMCursor = require('./cursor');
+const { Cursor, DOMCursor } = require('./cursor');
 
 const defaultJsdomOptions = {
   runScripts: 'dangerously',
@@ -15,6 +17,7 @@ class Scraper {
     return JSDOM
       .fromURL(this.url, this.jsdomOptions)
       .then(dom => {
+        this.dom = dom;
         this.cursor = new DOMCursor(dom);
         return this;
       });
@@ -24,8 +27,27 @@ class Scraper {
     return this.dom.serialize();
   }
 
-  extract(query) {
-    return this.cursor.extract(query);
+  select(query) {
+    return this.cursor.select(query);
+  }
+
+  async submitForm(form, specificParams) {
+    const actionUrl = form.action;
+    const formParams = new Cursor(form.elements)
+      .fetch()
+      .reduce((args, element) => {
+        args[element.name] = element.value;
+        return args;
+      }, {});
+    const params = qs.stringify(Object.assign(formParams, specificParams));
+
+    const response = await fetch(actionUrl, {
+      method: 'POST',
+      headers: { 'content-type': 'application/x-www-form-urlencoded' },
+      body: params
+    });
+
+    return new Scraper(response.url, this.jsdomOptions);
   }
 
   close() {
