@@ -1,7 +1,7 @@
 'use strict';
 
 const { JSDOM } = require('jsdom');
-const createCursor = require('./cursor');
+const DOMCursor = require('./cursor');
 
 const defaultJsdomOptions = {
   runScripts: 'dangerously',
@@ -9,37 +9,28 @@ const defaultJsdomOptions = {
 };
 
 class Scraper {
-  constructor(url) {
+  constructor(url, jsdomOptions) {
     this.url = url;
-    this.dom = null;
-    this.jsdomOptions = defaultJsdomOptions;
-  }
-
-  async fetch() {
-    this.dom = await JSDOM.fromURL(this.url, this.jsdomOptions);
+    this.jsdomOptions = jsdomOptions|| defaultJsdomOptions;
+    return JSDOM
+      .fromURL(this.url, this.jsdomOptions)
+      .then(dom => {
+        this.cursor = new DOMCursor(dom);
+        return this;
+      });
   }
 
   get plainHTML() {
-    return this.dom && this.dom.serialize();
-  }
-
-  close() {
-    this.dom.window.close();
+    return this.dom.serialize();
   }
 
   extract(query) {
-    return createCursor(this.dom.window.document.querySelector(query));
+    return this.cursor.extract(query);
   }
 
-  extractAll(query) {
-    return createCursor(this.dom.window.document.querySelectorAll(query))
+  close() {
+    this.cursor.close();
   }
 }
 
-(async () => {
-  const scraper = new Scraper('http://rozklad.kpi.ua/Schedules/ScheduleGroupSelection.aspx');
-  await scraper.fetch();
-  scraper.close();
-})();
-
-
+module.exports = Scraper;

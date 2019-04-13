@@ -1,36 +1,49 @@
 'use strict';
 
-const map = (prototype, cursor, items) =>
-  Object
-    .keys(prototype)
-    .forEach(prop => {
-      const descriptor = Object.getOwnPropertyDescriptor(prototype, prop);
-      if (!descriptor) return;
+const { JSDOM } = require('jsdom');
 
-      const newDescriptor = {
-        configurable: false,
-        enumerable: true,
-      };
+class DOMCursor {
+  constructor(dom) {
+    this.dom = dom;
+  }
 
-      if (descriptor.value && typeof descriptor.value === 'function') {
-        newDescriptor.value = (...args) => items.map(item =>
-          item[prop](...args)
-        );
-      } else {
-        newDescriptor.get = () => items.map(item => item[prop]);
-        newDescriptor.set = val => items.map(item => item[prop] = val);
-      }
+  extract(query) {
+    return new Cursor(this.dom.window.document.querySelectorAll(query));
+  }
 
-      Object.defineProperty(cursor, prop, newDescriptor);
-    });
+  close() {
+    this.dom.window.close();
+  }
+}
 
-const createCursor = nodeList => {
-  const items = nodeList[Symbol.iterator] ? Array.from(nodeList) : [nodeList];
-  const first = () => items[0];
-  const cursor = { first };
-  const { prototype } = items[0].constructor;
-  map(prototype, cursor, items);
-  return cursor;
-};
+class Cursor {
+  constructor(nodeList) {
+    if (!nodeList) {
+      this.items = [];
+    } else {
+      this.items =
+        nodeList[Symbol.iterator]
+          ? Array.from(nodeList)
+          : [nodeList];
+    }
+  }
 
-module.exports = createCursor;
+  first() {
+    if (this.items.length === 0) return new Cursor();
+
+    const { innerHTML } = this.items[0];
+    const dom = new JSDOM(innerHTML);
+
+    return new DOMCursor(dom);
+  }
+
+  project(property) {
+    return new Cursor(this.items.map(item => item[property]));
+  }
+
+  fetch() {
+    return this.items;
+  }
+}
+
+module.exports = DOMCursor;
