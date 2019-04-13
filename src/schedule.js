@@ -294,7 +294,7 @@ class Schedule {
         return lesson.startTime <= currentTime &&
           lesson.endTime >= currentTime
       });
-      if (lesson) return `${serializer(lesson)}`;
+      if (lesson) return `${dailySchedule.day}\n${serializer(lesson)}`;
     }
 
     const dailySchedule = Schedule.nextDailySchedule(
@@ -303,7 +303,7 @@ class Schedule {
       day
     );
     const [lesson] = dailySchedule.lessons;
-    return `${serializer(lesson)}`;
+    return `${dailySchedule.day}\n${serializer(lesson)}`;
   }
 
   stopTrackingWeekNumber() {
