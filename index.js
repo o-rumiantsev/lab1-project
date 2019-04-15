@@ -1,9 +1,13 @@
 'use strict';
 
+const fs = require('fs');
+const path = require('path');
 const TelegramBot = require('node-telegram-bot-api');
 const Schedule = require('./src/schedule');
 
 const TOKEN = process.env.TELEGRAM_TOKEN;
+const DOC_FILE = path.join(__dirname, '/doc/help.txt');
+const DOC = fs.readFileSync(DOC_FILE);
 
 const bot = new TelegramBot(TOKEN, { polling: true });
 const chatSchedules = new Map();
@@ -14,11 +18,19 @@ bot.onText(/\/setgroup.*/, async message => {
   const groupName = message.text.split(' ')[1];
 
   if (!groupName) {
-    bot.sendMessage(chatId, 'Вкажіть назву групи, будь ласка');
+    bot.sendMessage(
+      chatId,
+      'Ви не вказали назву групи (/setgroup <назва групи>)'
+    );
     return;
   }
 
   const schedule = schedules.get(groupName) || await new Schedule(groupName);
+
+  if (!schedule) {
+    bot.sendMessage(chatId, 'Некорректна назва группи.');
+    return;
+  }
 
   schedules.set(groupName, schedule);
   chatSchedules.set(chatId, schedule);
@@ -130,9 +142,5 @@ bot.onText(/\/nextlesson.*/, message => {
 
 bot.onText(/\/help.*/, message => {
   const chatId = message.chat.id;
-
-  const helpMessage = 'Для виводу більш детальної інформації, ' +
-    'використовуйте параметр "+" (/<команда> +)';
-
-  bot.sendMessage(chatId, helpMessage);
+  bot.sendMessage(chatId, DOC);
 });

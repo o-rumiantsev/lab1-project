@@ -319,8 +319,3 @@ class Schedule {
 }
 
 module.exports = Schedule;
-
-(async () => {
-  const s = await new Schedule('ІП-71');
-  console.log(s.tomorrow());
-})();
