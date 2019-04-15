@@ -135,9 +135,14 @@ class Schedule {
       .then(scraper => {
         const tables = scraper.select(TABLES_CLASS).fetch();
         for (let i = 0; i < tables.length; ++i) {
-          const [row] = Array.from(tables[i].rows).slice(1);
-          const lastCell = Array.from(row.children).pop();
-          if (lastCell.className === CURRENT_WEEK_CLASS_NAME) {
+          const rows = Array.from(tables[i].rows).slice(1);
+          const isCurrentWeek = rows.some(row => {
+            const cells = Array.from(row.children);
+            if (cells.some(cell => cell.className === CURRENT_WEEK_CLASS_NAME)) {
+              return true;
+            }
+          });
+          if (isCurrentWeek) {
             this.weekNumber = i;
             break;
           }
@@ -156,12 +161,13 @@ class Schedule {
     return `${lesson.number}. ${lesson.startTime}\n` +
       `Дисципліна: ${lesson.subject}\n` +
       `Викладачі: ${lesson.teachers}\n` +
-      `Аудиторія: ${lesson.place}\n` +
-      `Тип заняття: ${lesson.type}`;
+      `Аудиторія: ${lesson.place || ''}\n` +
+      `Тип заняття: ${lesson.type || ''}`;
   }
 
   static lessonToStringShort(lesson) {
-    return `${lesson.number}. ${lesson.subject} ${lesson.place} ${lesson.type}`;
+    return `${lesson.number}. ${lesson.subject} ` +
+      `${lesson.place || ''} ${lesson.type || ''}`;
   }
 
   static dayToString({ day, lessons }, detailed = false) {
@@ -272,7 +278,7 @@ class Schedule {
     const timeLeft = Time.diff(lesson.endTime, currentTime);
     let timeLeftMessage = 'До кінця пари залишилось';
     if (timeLeft.hours) timeLeftMessage += ` ${timeLeft.hours} година`;
-    const minsLeft = timeLeft.minutes.toString();
+    const minsLeft = timeLeft.mins.toString();
     const ending = minsLeft[minsLeft.length - 1];
     timeLeftMessage += ` ${minsLeft} ${endWith[ending]}`;
 
@@ -291,10 +297,9 @@ class Schedule {
     if (currentTime <= LAST_LESSON) {
       const dailySchedule = this.schedule[this.weekNumber][day];
       const lesson = dailySchedule.lessons.find(lesson => {
-        return lesson.startTime <= currentTime &&
-          lesson.endTime >= currentTime
+          return lesson.startTime >= currentTime
       });
-      if (lesson) return `${dailySchedule.day}\n${serializer(lesson)}`;
+      if (lesson) return `${serializer(lesson)}`;
     }
 
     const dailySchedule = Schedule.nextDailySchedule(
@@ -314,3 +319,8 @@ class Schedule {
 }
 
 module.exports = Schedule;
+
+(async () => {
+  const s = await new Schedule('ІП-71');
+  console.log(s.tomorrow());
+})();
