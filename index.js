@@ -27,7 +27,7 @@ bot.onText(/\/setgroup.*/, async message => {
 
   const schedule = schedules.get(groupName) || await new Schedule(groupName);
 
-  if (!schedule) {
+  if (schedule.schedule.length === 0) {
     bot.sendMessage(chatId, 'Некорректна назва группи.');
     return;
   }
