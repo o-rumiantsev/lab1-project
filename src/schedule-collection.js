@@ -16,7 +16,7 @@ const dailyReport = (
   detailed
 ) => {
   const report = [];
-  if (dailySchedule.empty) {
+  if (!dailySchedule || dailySchedule.empty) {
     const nextDailySchedule = schedule.nextDailySchedule(day);
     report.push(noLessonsMessage, '');
     report.push(nextDailySchedule.day);
@@ -200,3 +200,10 @@ class ScheduleCollection {
 }
 
 module.exports = ScheduleCollection;
+
+(async () => {
+  const sc = new ScheduleCollection();
+  await sc.setGroup(1, 'ІП-71');
+
+  console.log(sc.tomorrow(1));
+})().catch(console.error);
