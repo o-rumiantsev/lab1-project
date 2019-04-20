@@ -200,10 +200,3 @@ class ScheduleCollection {
 }
 
 module.exports = ScheduleCollection;
-
-(async () => {
-  const sc = new ScheduleCollection();
-  await sc.setGroup(1, 'ІП-71');
-
-  console.log(sc.tomorrow(1));
-})().catch(console.error);
