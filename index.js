@@ -72,12 +72,12 @@
 //
 // bot.on(/\/help.*/, chatId => bot.sendMessage(chatId, DOC));
 
-const TelegramBot = require('node-telegram-bot-api');
-const bot = new TelegramBot(process.env.TELEGRAM_TOKEN, {
-  webHook: {
-    port: 443,
-  },
-});
+// const TelegramBot = require('node-telegram-bot-api');
+// const bot = new TelegramBot(process.env.TELEGRAM_TOKEN, {
+//   webHook: {
+//     port: 443,
+//   },
+// });
 
 // bot.setWebHook(`${}`)
 
