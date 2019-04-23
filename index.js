@@ -73,6 +73,7 @@
 // bot.on(/\/help.*/, chatId => bot.sendMessage(chatId, DOC));
 
 module.exports = (req, res) => {
+
   res.writeHead(200);
   res.end('OK');
 };

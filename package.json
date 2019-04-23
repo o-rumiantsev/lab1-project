@@ -1,5 +1,5 @@
 {
-  "name": "o-rumiantsev.schedule",
+  "name": "o-rumiantsev_schedule",
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
@@ -15,8 +15,8 @@
     "fmt:yml": "prettier --write \"**/*.yml\"",
     "build": "echo lab1-project",
     "deploy": "yarn run deploy:zeit && yarn run deploy:alias",
-    "deploy:zeit": "now --token $NOW_TOKEN -e WEBHOOK=lab1-project-$TRAVIS_BRANCH.now.sh",
-    "deploy:alias": "now alias --token $NOW_TOKEN \"lab1-project-$TRAVIS_BRANCH\""
+    "deploy:zeit": "now --token $NOW_TOKEN -e WEBHOOK=o-rumiantsev_schedule",
+    "deploy:alias": "now alias --token $NOW_TOKEN \"o-rumiantsev_schedule\""
   },
   "repository": {
     "type": "git",
