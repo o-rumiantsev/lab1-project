@@ -15,7 +15,7 @@
     "fmt:yml": "prettier --write \"**/*.yml\"",
     "build": "echo lab1-project",
     "deploy": "yarn run deploy:zeit && yarn run deploy:alias",
-    "deploy:zeit": "now --token $NOW_TOKEN -e WEBHOOK=o-rumiantsev-schedule",
+    "deploy:zeit": "now --token $NOW_TOKEN",
     "deploy:alias": "now alias --token $NOW_TOKEN \"o-rumiantsev-schedule\""
   },
   "repository": {

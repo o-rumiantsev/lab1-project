@@ -1,6 +1,12 @@
 {
   "version": 2,
   "name": "o-rumiantsev-schedule",
+  "build": {
+    "env": {
+      "WEBHOOK": "o-rumiantsev-schedule",
+      "TELEGRAM_TOKEN": "@telegram-token"
+    }
+  },
   "builds": [
     {
       "src": "./index.js",
