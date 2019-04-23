@@ -75,6 +75,7 @@
 const TelegramBot = require('node-telegram-bot-api');
 const bot = new TelegramBot(process.env.TELEGRAM_TOKEN, {
   webHook: {
+    host: `${process.env.WEBHOOK}/${process.env.TELEGRAM_TOKEN}`,
     port: 443,
   },
 });
