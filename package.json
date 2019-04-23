@@ -15,7 +15,7 @@
     "fmt:yml": "prettier --write \"**/*.yml\"",
     "build": "echo lab1-project",
     "deploy": "yarn run deploy:zeit && yarn run deploy:alias",
-    "deploy:zeit": "now --token $NOW_TOKEN -e NOW_URL=lab1-project-$TRAVIS_BRANCH.now.sh",
+    "deploy:zeit": "now --token $NOW_TOKEN -e WEBHOOK=lab1-project-$TRAVIS_BRANCH.now.sh",
     "deploy:alias": "now alias --token $NOW_TOKEN \"lab1-project-$TRAVIS_BRANCH\""
   },
   "repository": {
