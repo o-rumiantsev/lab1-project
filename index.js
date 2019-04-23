@@ -74,5 +74,9 @@
 
 module.exports = (req, res) => {
   res.writeHead(200);
+  res.write(
+    `webhook: ${process.env.WEBHOOK}\n
+token_length: ${process.env.TELEGRAM_TOKEN.length}`
+  );
   res.end('OK');
 };
