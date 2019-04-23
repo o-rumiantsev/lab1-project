@@ -72,16 +72,17 @@
 //
 // bot.on(/\/help.*/, chatId => bot.sendMessage(chatId, DOC));
 
-// const TelegramBot = require('node-telegram-bot-api');
-// const bot = new TelegramBot(process.env.TELEGRAM_TOKEN, {
-//   webHook: {
-//     port: 443,
-//   },
-// });
+const TelegramBot = require('node-telegram-bot-api');
+const bot = new TelegramBot(process.env.TELEGRAM_TOKEN, {
+  webHook: {
+    port: 443,
+  },
+});
 
-// bot.setWebHook(`${}`)
+bot.setWebHook(`${process.env.WEBHOOK}/bot${process.env.TELEGRAM_TOKEN}`);
 
-module.exports = (req, res) => {
-  res.writeHead(200);
-  res.end(`${process.env.NOW_URL}`);
-};
+bot.on('message', function onMessage(msg) {
+  bot.sendMessage(msg.chat.id, 'I am alive on Zeit Now!');
+});
+
+module.exports = bot;
