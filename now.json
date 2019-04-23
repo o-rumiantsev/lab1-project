@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "o-rumiantsev.schedule",
+  "name": "o-rumiantsev-schedule",
   "builds": [
     {
       "src": "./index.js",
