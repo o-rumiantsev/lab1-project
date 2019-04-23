@@ -2,7 +2,7 @@
   "version": 2,
   "name": "o-rumiantsev-schedule",
   "env": {
-    "WEBHOOK": "o-rumiantsev-schedule",
+    "WEBHOOK": "https://o-rumiantsev-schedule.now.sh",
     "TELEGRAM_TOKEN": "@telegram-token"
   },
   "builds": [

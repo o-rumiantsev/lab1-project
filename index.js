@@ -79,10 +79,14 @@ const bot = new TelegramBot(process.env.TELEGRAM_TOKEN, {
   },
 });
 
-bot.setWebHook(`${process.env.WEBHOOK}/bot${process.env.TELEGRAM_TOKEN}`);
+bot.setWebHook(`${process.env.WEBHOOK}/${process.env.TELEGRAM_TOKEN}`);
 
 bot.on('message', function onMessage(msg) {
   bot.sendMessage(msg.chat.id, 'I am alive on Zeit Now!');
 });
 
-module.exports = bot;
+module.exports = (req, res) => {
+  console.log(req.body);
+  res.writeHead(200);
+  res.end();
+};
